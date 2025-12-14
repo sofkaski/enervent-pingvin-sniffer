@@ -1,0 +1,58 @@
+mappings:
+  - register: "40001"
+    datatype: "int16"
+    length: 1
+    scale: 0.1
+    unit: "°C"
+    topic: "sensors/room1/temperature"
+    ha_component: "sensor"
+    ha_device_class: "temperature"
+    retain: true
+    qos: 1
+    unique_id: "room1_temp_40001"
+    description: "Room 1 temperature (one register, value * 0.1)"
+    poll_interval: 10
+
+  - register: "40010"
+    datatype: "int32"
+    length: 2
+    scale: 0.001
+    unit: "kW"
+    topic: "sensors/power/plant"
+    ha_component: "sensor"
+    ha_device_class: "power"
+    retain: false
+    qos: 1
+    unique_id: "plant_power_40010"
+    description: "32-bit signed power reading (2 registers)"
+
+  - register: "coil:5"
+    datatype: "bool"
+    length: 1
+    topic: "sensors/door/locked"
+    ha_component: "binary_sensor"
+    ha_device_class: "door"
+    retain: true
+    qos: 1
+    unique_id: "door_locked_coil5"
+    description: "Door locked state from coil 5 (read-only)"
+    readonly: true
+
+  - register: "40020-40025"
+    datatype: "uint16"
+    length: 1
+    topic: "sensors/inputs/{offset}"
+    ha_component: "sensor"
+    retain: false
+    qos: 0
+    description: "Range mapped to multiple topics; {offset} expands to the register offset starting at 40020"
+
+  - register: "40050"
+    datatype: "uint16"
+    length: 1
+    topic: "sensors/alarm/state"
+    ha_component: "binary_sensor"
+    ha_device_class: "problem"
+    transform: "((value >> 3) & 1) === 1 ? 'alarm' : 'ok'"
+    unique_id: "alarm_state_40050"
+    description: "Interpret bit 3 as an alarm flag using transform"

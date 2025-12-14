@@ -1,0 +1,41 @@
+{
+  "name": "enervent-pingvin-sniffer",
+  "version": "1.0.0",
+  "description": "Sniffer that eavesdrop Enervent Pingvin modbus RTU and publishes selected registers as MQTT topics that are used in Home Assistant.",
+  "keywords": [
+    "modbus",
+    "RTU",
+    "mqtt"
+  ],
+  "homepage": "https://github.com/sofkaski/enervent-pingvin-sniffer#readme",
+  "bugs": {
+    "url": "https://github.com/sofkaski/enervent-pingvin-sniffer/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sofkaski/enervent-pingvin-sniffer.git"
+  },
+  "license": "MIT",
+  "author": "Jyrki Kaski",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node dist/index.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest --run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.0.0",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.5.0",
+    "vitest": "^1.0.0"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "mqtt": "^4.3.7"
+  }
+}
