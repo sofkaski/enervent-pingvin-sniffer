@@ -9,20 +9,17 @@ describe('RegisterMap loader', () => {
     const all = rm.listAll()
     expect(all.length).toBeGreaterThan(0)
 
-    const m40001 = rm.lookupByAddress(40001)
-    expect(m40001).not.toBeNull()
-    expect(m40001?.topicResolved).toBe('sensors/room1/temperature')
+    const m1 = rm.lookupByAddress(1)
+    expect(m1).not.toBeNull()
+    expect(m1?.topicResolved).toBe('sensors/op1/temperature')
   })
 
-  it('applies transform for bitfield', async () => {
+  it('contains humidity mapping', async () => {
     const file = join(process.cwd(), 'config', 'register-map.yaml')
     const rm = await loadRegisterMap(file)
-    const m = rm.lookupByAddress(40050)
-    expect(m).not.toBeNull()
-    // simulate uint16 where bit 3 is set (value = 8)
-    const raw = Buffer.from([0x00, 0x08])
-    const parsed = 8
-    const out = rm.applyTransform(m as any, parsed, Array.from(raw))
-    expect(out).toBe('alarm')
+    const m13 = rm.lookupByAddress(13)
+    expect(m13).not.toBeNull()
+    expect(m13?.datatype).toBe('uint16')
+    expect(m13?.topicResolved).toBe('sensors/wr/humidity')
   })
 })

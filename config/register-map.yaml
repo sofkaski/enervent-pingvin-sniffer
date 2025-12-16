@@ -1,58 +1,75 @@
+defaults: &defaults
+  retain: true
+  qos: 1
+  read_only: true
+
+temperature_defaults: &temperature_defaults
+  <<: *defaults
+  datatype: "int16"
+  length: 1
+  scale: 0.1
+  unit: "°C"
+  ha_component: "sensor"
+  ha_device_class: "temperature"
+
 mappings:
-  - register: "40001"
-    datatype: "int16"
-    length: 1
-    scale: 0.1
-    unit: "°C"
-    topic: "sensors/room1/temperature"
-    ha_component: "sensor"
-    ha_device_class: "temperature"
-    retain: true
-    qos: 1
-    unique_id: "room1_temp_40001"
-    description: "Room 1 temperature (one register, value * 0.1)"
-    poll_interval: 10
-
-  - register: "40010"
-    datatype: "int32"
-    length: 2
-    scale: 0.001
-    unit: "kW"
-    topic: "sensors/power/plant"
-    ha_component: "sensor"
-    ha_device_class: "power"
-    retain: false
-    qos: 1
-    unique_id: "plant_power_40010"
-    description: "32-bit signed power reading (2 registers)"
-
-  - register: "coil:5"
-    datatype: "bool"
-    length: 1
-    topic: "sensors/door/locked"
-    ha_component: "binary_sensor"
-    ha_device_class: "door"
-    retain: true
-    qos: 1
-    unique_id: "door_locked_coil5"
-    description: "Door locked state from coil 5 (read-only)"
-    readonly: true
-
-  - register: "40020-40025"
+  - register: "1"
+    topic: "sensors/op1/temperature"
+    unique_id: "op1_temp_1"
+    description: "Temperature at operator panel 1"
+    <<: *temperature_defaults
+  - register: "6"
+    topic: "sensors/frs/temperature"
+    unique_id: "frs_temp_6"
+    description: "Fresh air temperature"
+    <<: *temperature_defaults
+  - register: "7"
+    topic: "sensors/sply_lto/temperature"
+    unique_id: "sply_lto_temp_7"
+    description: "Supply air temperature after HRC"
+    <<: *temperature_defaults
+  - register: "8"
+    topic: "sensors/sply/temperature"
+    unique_id: "sply_temp_8"
+    description: "Supply air temperature"
+    <<: *temperature_defaults
+  - register: "9"
+    topic: "sensors/wst/temperature"
+    unique_id: "wst_temp_9"
+    description: "Waste air temperature"
+    <<: *temperature_defaults
+  - register: "10"
+    topic: "sensors/ext/temperature"
+    unique_id: "ext_temp_10"
+    description: "Room removed air temperature"
+    <<: *temperature_defaults
+  - register: "11"
+    topic: "sensors/ext_lto/temperature"
+    unique_id: "ext_lto_temp_11"
+    description: "Removed air temperature before HRC"
+    <<: *temperature_defaults
+  - register: "12"
+    topic: "sensors/wr/temperature"
+    unique_id: "wr_temp_12"
+    description: "Return water temperature"
+    <<: *temperature_defaults
+  - register: "13"
     datatype: "uint16"
     length: 1
-    topic: "sensors/inputs/{offset}"
+    scale: 1
+    unit: "%"
     ha_component: "sensor"
-    retain: false
-    qos: 0
-    description: "Range mapped to multiple topics; {offset} expands to the register offset starting at 40020"
-
-  - register: "40050"
+    ha_device_class: "humidity"
+    topic: "sensors/wr/humidity"
+    unique_id: "hum_ext_13"
+    description: "Exhaust air humidity"
+  - register: "35"
     datatype: "uint16"
     length: 1
-    topic: "sensors/alarm/state"
-    ha_component: "binary_sensor"
-    ha_device_class: "problem"
-    transform: "((value >> 3) & 1) === 1 ? 'alarm' : 'ok'"
-    unique_id: "alarm_state_40050"
-    description: "Interpret bit 3 as an alarm flag using transform"
+    scale: 1
+    unit: "%"
+    ha_component: "sensor"
+    ha_device_class: "humidity"
+    topic: "sensors/rh_mean/humidity"
+    unique_id: "hum_rh_mean_35"
+    description: "48h humidity average"
