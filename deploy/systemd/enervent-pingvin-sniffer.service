@@ -1,0 +1,33 @@
+[Unit]
+Description=Enervent Pingvin Sniffer (periodic capture)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+# Change this to the system user that should run the job
+User=pi
+# Set this to the installation directory of the app (where package.json is)
+WorkingDirectory=/opt/enervent-pingvin-sniffer
+# Optional: set environment overrides here, e.g. REGISTER_MAP_PATH, MQTT_URL, SNIFFER_ARGS
+# Environment=REGISTER_MAP_PATH=/etc/enervent/register-map.yaml
+Environment=NODE_ENV=production
+Environment=WORKING_DIR=/opt/enervent-pingvin-sniffer
+Environment=LOG_LEVEL:=info
+Environment=REGISTER_MAP_PATH=/opt/enervent-pingvin-sniffer/config/register-map.yaml
+Environment=SNIFFER_ARGS=-p /dev/ttyUSB0 -s 19200 -l -t 1500 --silent --func 16 --slave 0
+Environment=SNIFFER_BIN=/opt/modbus-sniffer/sniffer
+Environment=MQTT_URL=mqtt://localhost:1883
+Environment=MQTT_USERNAME=undefined
+Environment=MQTT_PASSWORD=undefined
+Environment=CAPTURE_TIMEOUT_MS=60000
+Environment=MODBUS_ADDRESS_BASE=0
+Environment=MODBUS_CONVENTIONAL_BASE=0
+
+ExecStart=/usr/bin/env npm run start
+TimeoutStartSec=300
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

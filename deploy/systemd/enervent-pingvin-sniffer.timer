@@ -1,0 +1,13 @@
+[Unit]
+Description=Run enervent-pingvin-sniffer every 10 minutes
+
+[Timer]
+# Delay after boot before first run
+OnBootSec=2min
+# Run every 10 minutes
+OnUnitActiveSec=10min
+Persistent=false
+Unit=enervent-pingvin-sniffer.service
+
+[Install]
+WantedBy=timers.target
