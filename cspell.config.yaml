@@ -1,0 +1,17 @@
+version: "0.2"
+ignorePaths: ['.gitignore']
+dictionaryDefinitions: []
+dictionaries: []
+words:
+  - behaviour
+  - bitfield
+  - enervent
+  - journalctl
+  - MQTT
+  - pingvin
+  - Regs
+  - sply
+  - usec
+  - vitepress
+ignoreWords: []
+import: []
