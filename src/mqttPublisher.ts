@@ -18,6 +18,43 @@ export class MqttPublisher {
     this.opts = opts || { defaultQos: 0, defaultRetain: false }
   }
 
+  /**
+   * Publish Home Assistant MQTT discovery config for all mapped entries.
+   * Config messages are published with retain=true so Home Assistant can discover on boot.
+   */
+  publishAllDiscovery(): void {
+    const entries = this.rm.listAll()
+    for (const e of entries) this.publishDiscoveryForEntry(e)
+  }
+
+  private publishDiscoveryForEntry(entry: MappingEntry): void {
+    const component = (entry.ha_component || 'sensor')
+    const stateTopic = entry.ha_state_topic_override || entry.topicResolved || entry.topic
+    if (!stateTopic) return
+
+    const unique = entry.unique_id || String(entry.topicResolved || entry.topic || entry.expandedRegister)
+    const uniqClean = unique.replace(/[^a-zA-Z0-9_-]/g, '_')
+    const discTopic = `homeassistant/${component}/${uniqClean}/config`
+
+    const cfg: any = {
+      name: entry.description || entry.topicResolved || entry.topic || String(entry.expandedRegister),
+      state_topic: stateTopic,
+      unique_id: uniqClean,
+      qos: (entry.qos ?? this.opts.defaultQos ?? 0),
+    }
+    if (entry.ha_device_class) cfg.device_class = entry.ha_device_class
+    if (entry.unit) cfg.unit_of_measurement = entry.unit
+
+    try {
+      // discovery configs should be retained
+      this.client.publish(discTopic, JSON.stringify(cfg), { retain: true, qos: cfg.qos }, err => {
+        if (err) console.error('mqtt discovery publish error', err)
+      })
+    } catch (err) {
+      console.error('publish discovery exception', err)
+    }
+  }
+
   publishRegister(register: number | string, raw: Buffer): boolean {
     const entry = this.rm.lookupByAddress(register)
     if (!entry) {

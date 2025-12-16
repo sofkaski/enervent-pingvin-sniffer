@@ -18,11 +18,11 @@ describe('MqttPublisher', () => {
     const fake = new FakeClient() as any
     const pub = new MqttPublisher(fake, rm)
 
-    // for register 40001 in mapping (scale 0.1) use value 25 -> 2.5
+    // for register 1 in mapping (scale 0.1) use value 25 -> 2.5
     const raw = Buffer.from([0x00, 0x19])
-    const ok = pub.publishRegister(40001, raw)
+    const ok = pub.publishRegister(1, raw)
     expect(ok).toBe(true)
-    expect(fake.last.topic).toBe('sensors/room1/temperature')
+    expect(fake.last.topic).toBe('sensors/op1/temperature')
     expect(fake.last.payload).toBe('2.5')
   })
 })
