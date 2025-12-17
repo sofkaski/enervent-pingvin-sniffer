@@ -1,0 +1,102 @@
+@startuml proj_overview
+' Project overview - enervent-pingvin-sniffer
+
+skinparam classAttributeIconSize 0
+
+package "src" {
+  class ModbusSniffer <<EventEmitter>> {
+    - proc: ChildProcessWithoutNullStreams | null
+    - buf: Buffer
+    - littleEndian: boolean
+    - readOffset: number
+    - opt: SnifferOptions
+    --
+    + constructor(opt?: SnifferOptions)
+    + start(): void
+    + stop(): void
+    - onData(chunk: Buffer): void
+    + on(event: 'frame', cb): void
+    + on(event: 'error', cb): void
+  }
+
+  class RegisterMap <<EventEmitter>> {
+    - map: Map<string, MappingEntry>
+    - raw: MappingEntryRaw[]
+    - filePath?: string
+    - opts: RegisterMapOptions
+    - watcher: any
+    --
+    + constructor(opts?: RegisterMapOptions)
+    + load(filePath: string): Promise<ValidationResult>
+    + lookupByAddress(address: number | string): MappingEntry | null
+    + listAll(): MappingEntry[]
+    + expandRanges(entry: MappingEntryRaw): MappingEntry[]
+    + applyTransform(entry: MappingEntry, value: any, raw?: Buffer | number[]): any
+    + close(): Promise<void>
+  }
+
+  class MqttPublisher {
+    - client: MqttClient
+    - rm: RegisterMap
+    - opts: PublisherOptions
+    --
+    + constructor(client: MqttClient, rm: RegisterMap, opts?: PublisherOptions)
+    + publishRegister(register: number | string, raw: Buffer): boolean
+    + publishAllDiscovery(): void
+    - publishDiscoveryForEntry(entry: MappingEntry): void
+    - parseRaw(entry: MappingEntry, raw: Buffer): any
+  }
+
+  class TransformEvaluator {
+    .. static ..
+    + evaluateTransform(expr: string, ctx: TransformContext): any
+  }
+
+  class App {
+    + start(): Promise<{rm, sniffer, client}>
+  }
+
+  ' Data types
+  class MappingEntryRaw {
+    + register: string
+    + datatype: string
+    + length?: number
+    + scale?: number
+    + topic: string
+    + ... 
+  }
+  class MappingEntry {
+    + expandedRegister?: number | string
+    + offset?: number
+    + topicResolved?: string
+    + (inherits MappingEntryRaw)
+  }
+}
+
+' relationships
+ModbusSniffer -down-> "Frame (event payload)" : emits
+MqttPublisher --> RegisterMap : uses (rm)
+RegisterMap ..> TransformEvaluator : calls
+App --> ModbusSniffer : creates/controls
+App --> MqttPublisher : creates/controls
+MqttPublisher --> "MQTT broker (mqtt.Client)" : publishes to
+RegisterMap --> MappingEntry : contains >
+MappingEntryRaw <|-- MappingEntry
+
+' Stereotypes and notes
+note top of ModbusSniffer
+  Parses pcap output (from modbus-sniffer)
+  and emits 'frame' events
+end note
+
+note top of RegisterMap
+  Loads YAML register-map, expands ranges,
+  provides lookup and transform application
+end note
+
+note top of MqttPublisher
+  Parses raw register bytes, applies transforms,
+  publishes MQTT state and Home Assistant discovery
+end note
+
+@enduml

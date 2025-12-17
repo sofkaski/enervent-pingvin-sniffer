@@ -100,6 +100,9 @@ export class ModbusSniffer extends EventEmitter {
         const ts_usec = this.littleEndian ? this.buf.readUInt32LE(4) : this.buf.readUInt32BE(4)
         const incl_len = this.littleEndian ? this.buf.readUInt32LE(8) : this.buf.readUInt32BE(8)
         const orig_len = this.littleEndian ? this.buf.readUInt32LE(12) : this.buf.readUInt32BE(12)
+        if (logLevel === 'debug') {
+          console.debug('Parsing frame. Incl_len: %s (%d) Orig_len: %s (%d)', incl_len.toString(16), incl_len, orig_len.toString(16), orig_len)
+        }
 
         if (this.buf.length < PCAP_PACKET_HEADER_LENGTH + incl_len) break
 
