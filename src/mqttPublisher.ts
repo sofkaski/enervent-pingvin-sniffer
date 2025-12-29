@@ -7,6 +7,15 @@ export interface PublisherOptions {
   defaultRetain?: boolean
 }
 
+/* MQTT Discovery device information. TODO: This should actually be got from the device */ 
+const mqttDeviceInformation = {
+  'identifiers': 'Pingvin Kotilämpö W',
+  'name': 'Enervent Greenair',
+  'sw_version': '5.62',
+  'model': 'Pingvin Eco EDW',
+  'manufacturer': 'Enervent',
+}
+
 export class MqttPublisher {
   private client: MQTTClient
   private rm: RegisterMap
@@ -17,7 +26,7 @@ export class MqttPublisher {
     this.rm = rm
     this.opts = opts || { defaultQos: 0, defaultRetain: false }
   }
-
+  
   /**
    * Publish Home Assistant MQTT discovery config for all mapped entries.
    * Config messages are published with retain=true so Home Assistant can discover on boot.
@@ -41,6 +50,7 @@ export class MqttPublisher {
       state_topic: stateTopic,
       unique_id: uniqClean,
       qos: (entry.qos ?? this.opts.defaultQos ?? 0),
+      device: mqttDeviceInformation,
     }
     if (entry.ha_device_class) cfg.device_class = entry.ha_device_class
     if (entry.unit) cfg.unit_of_measurement = entry.unit
