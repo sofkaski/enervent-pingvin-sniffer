@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "minor_version": 1,
+  "key": "lovelace.dashboard_lammitys",
+  "data": {
+    "config": {
+      "views": [
+        {
+          "title": "Lämmitys",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading_style": "title",
+                  "heading": "Ilmalämmityksen tila"
+                },
+                {
+                  "type": "picture-elements",
+                  "elements": [
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "50%",
+                        "top": "33%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "sensor.waste_air_temperature"
+                    },
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "50%",
+                        "top": "71%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "sensor.fresh_air_temperature"
+                    },
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "26%",
+                        "top": "71%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "sensor.supply_air_temperature_after_hrc"
+                    },
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "26%",
+                        "top": "52%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "sensor.exhaust_air_humidity"
+                    },
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "58%",
+                        "top": "95%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "sensor.return_water_temperature"
+                    },
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "26%",
+                        "top": "35%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "sensor.room_removed_air_temperature"
+                    },
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "64%",
+                        "top": "71%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "sensor.supply_air_temperature"
+                    },
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "83%",
+                        "top": "90%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "sensor.temperature_at_operator_panel_1"
+                    }
+                  ],
+                  "image": {
+                    "media_content_id": "http://homeassistant.local:8123/local/enervent_diagram_fi.png",
+                    "media_content_type": "",
+                    "metadata": {
+                      "navigateIds": [
+                        {},
+                        {
+                          "media_content_type": "",
+                          "media_content_id": "__MANUAL_ENTRY__"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "column_span": 2
+            }
+          ],
+          "type": "sections",
+          "max_columns": 4,
+          "cards": []
+        }
+      ]
+    }
+  }
+}
