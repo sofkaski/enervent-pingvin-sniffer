@@ -13,7 +13,6 @@ set -euo pipefail
 : "${LOG_LEVEL:=info}"
 : "${REGISTER_MAP_PATH:=$WORKING_DIR/config/register-map.yaml}"
 : "${SNIFFER_ARGS:=-p /dev/ttyUSB0 -s 19200 -l -t 1500 --silent --func 16 --slave 0}"
-: "${SNIFFER_BIN:=/opt/modbus-sniffer/sniffer}"
 : "${MQTT_URL:=mqtt://localhost:1883}"
 : "${MQTT_USERNAME:=undefined}"
 : "${MQTT_PASSWORD:=undefined}"
@@ -24,7 +23,6 @@ set -euo pipefail
 export NODE_ENV
 export REGISTER_MAP_PATH
 export SNIFFER_ARGS
-export SNIFFER_BIN
 export MQTT_URL
 export MQTT_USERNAME
 export MQTT_PASSWORD
@@ -37,7 +35,6 @@ export MODBUS_CONVENTIONAL_BASE
 echo "Starting enervent-pingvin-sniffer"
 echo "  Working dir: $WORKING_DIR"
 echo "  REGISTER_MAP_PATH: $REGISTER_MAP_PATH"
-echo "  SNIFFER_BIN: $SNIFFER_BIN"
 echo "  SNIFFER_ARGS: $SNIFFER_ARGS"
 echo "  MQTT_URL: $MQTT_URL"
 echo "  CAPTURE_TIMEOUT_MS: $CAPTURE_TIMEOUT_MS"
@@ -46,7 +43,6 @@ echo "  CAPTURE_TIMEOUT_MS: $CAPTURE_TIMEOUT_MS"
 exec env NODE_ENV="$NODE_ENV" \
           REGISTER_MAP_PATH="$REGISTER_MAP_PATH" \
           SNIFFER_ARGS="$SNIFFER_ARGS" \
-          SNIFFER_BIN="$SNIFFER_BIN" \
           MQTT_URL="$MQTT_URL" \
           CAPTURE_TIMEOUT_MS="$CAPTURE_TIMEOUT_MS" \
           LOG_LEVEL="$LOG_LEVEL" \

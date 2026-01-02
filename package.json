@@ -20,7 +20,10 @@
   "type": "commonjs",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "init_submodules": "git submodule update --init --recursive",
+    "build_modbus_sniffer": "npm run init_submodules && cd modbus-sniffer && make clean && make",
+    "build_enervent_sniffer": "tsc",
+    "build": "npm run build_modbus_sniffer && npm run build_enervent_sniffer",
     "start": "npm run build && node dist/index.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "typecheck": "tsc --noEmit",

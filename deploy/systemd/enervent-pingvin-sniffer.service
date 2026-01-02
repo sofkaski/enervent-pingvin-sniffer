@@ -16,7 +16,6 @@ Environment=WORKING_DIR=/opt/enervent-pingvin-sniffer
 Environment=LOG_LEVEL:=info
 Environment=REGISTER_MAP_PATH=/opt/enervent-pingvin-sniffer/config/register-map.yaml
 Environment=SNIFFER_ARGS=-p /dev/ttyUSB0 -s 19200 -l -t 1500 --silent --func 16 --slave 0
-Environment=SNIFFER_BIN=/opt/modbus-sniffer/sniffer
 Environment=MQTT_URL=mqtt://localhost:1883
 Environment=MQTT_USERNAME=undefined
 Environment=MQTT_PASSWORD=undefined

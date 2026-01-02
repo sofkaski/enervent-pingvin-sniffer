@@ -3,6 +3,7 @@ import { logLevel, registerMapPath, addressingBase, mqttUrl, mqttClientId, mqttU
 import mqtt from 'mqtt'
 import ModbusSniffer from './modbusSniffer'
 import { MqttPublisher } from './mqttPublisher'
+import * as path from 'path'
 
 function parseModbusFrame(buf: Buffer) {
   if (logLevel === 'debug') {
@@ -42,7 +43,7 @@ export async function start() {
 
   // Sniffer
   const snifferArgs = process.env.SNIFFER_ARGS ? process.env.SNIFFER_ARGS.split(' ') : ['--silent']
-  const sniffer = new ModbusSniffer({ bin: process.env.SNIFFER_BIN || 'sniffer', args: snifferArgs })
+  const sniffer = new ModbusSniffer({ bin: process.env.SNIFFER_BIN || path.join(process.cwd(), 'modbus-sniffer', 'sniffer'), args: snifferArgs })
   sniffer.start()
 
   // Capture window: stop after all defined registers have been seen or after timeout
