@@ -12,7 +12,7 @@ set -euo pipefail
 : "${NODE_ENV:=production}"
 : "${LOG_LEVEL:=info}"
 : "${REGISTER_MAP_PATH:=$WORKING_DIR/config/register-map.yaml}"
-: "${SNIFFER_ARGS:=-p /dev/ttyUSB0 -s 19200 -l -t 1500 --silent --func 16 --slave 0}"
+: "${SNIFFER_ARGS:=-p /dev/ttyUSB0 -s 19200 -l -t 1300 --silent --func 16 --slave 0}"
 : "${MQTT_URL:=mqtt://localhost:1883}"
 : "${MQTT_USERNAME:=undefined}"
 : "${MQTT_PASSWORD:=undefined}"
