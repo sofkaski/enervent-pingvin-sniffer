@@ -54,6 +54,18 @@ export class MqttPublisher {
     }
     if (entry.ha_device_class) cfg.device_class = entry.ha_device_class
     if (entry.unit) cfg.unit_of_measurement = entry.unit
+    if (component === 'select') {
+      if (entry.ha_command_topic) cfg.command_topic = entry.ha_command_topic
+      if (entry.ha_options) {
+        // if options is an object mapping (label -> value), extract just the labels
+        if (typeof entry.ha_options === 'object' && !Array.isArray(entry.ha_options)) {
+          cfg.options = Object.keys(entry.ha_options)
+        } else {
+          cfg.options = entry.ha_options
+        }
+      }
+      if (entry.ha_value_template) cfg.value_template = entry.ha_value_template
+    }
 
     try {
       // discovery configs should be retained
@@ -65,6 +77,44 @@ export class MqttPublisher {
     }
   }
 
+  /**
+   * Resolve a select option label to its numeric value
+   */
+  resolveSelectOption(entry: MappingEntry, label: string): number | null {
+    if (!entry.ha_options || typeof entry.ha_options === 'string') return null
+    
+    if (Array.isArray(entry.ha_options)) {
+      // Simple array: use index as value
+      const idx = entry.ha_options.indexOf(label)
+      return idx >= 0 ? idx : null
+    } else {
+      // Object mapping: look up the value
+      const value = entry.ha_options[label]
+      return typeof value === 'number' ? value : (typeof value === 'string' ? parseInt(value, 10) : null)
+    }
+  }
+
+  /**
+   * Resolve a numeric value to its select option label
+   */
+  resolveSelectLabel(entry: MappingEntry, value: number | string): string | null {
+    if (!entry.ha_options) return null
+    
+    const numValue = typeof value === 'number' ? value : parseInt(value as string, 10)
+    
+    if (Array.isArray(entry.ha_options)) {
+      // Simple array: use index to get label
+      return numValue >= 0 && numValue < entry.ha_options.length ? entry.ha_options[numValue] : null
+    } else {
+      // Object mapping: find label with matching value
+      for (const [label, v] of Object.entries(entry.ha_options)) {
+        const mappedValue = typeof v === 'number' ? v : parseInt(v as string, 10)
+        if (mappedValue === numValue) return label
+      }
+      return null
+    }
+  }
+
   publishRegister(register: number | string, raw: Buffer): boolean {
     const entry = this.rm.lookupByAddress(register)
     if (!entry) {
@@ -73,7 +123,15 @@ export class MqttPublisher {
     }
 
     const value = this.parseRaw(entry, raw)
-    const transformed = this.rm.applyTransform(entry, value, Array.from(raw))
+    let transformed = this.rm.applyTransform(entry, value, Array.from(raw))
+
+    // For select components, convert numeric value to label
+    if (entry.ha_component === 'select' && entry.ha_options) {
+      const label = this.resolveSelectLabel(entry, transformed)
+      if (label !== null) {
+        transformed = label
+      }
+    }
 
     const topic = entry.ha_state_topic_override || entry.topicResolved || entry.topic
     const payload = typeof transformed === 'object' ? JSON.stringify(transformed) : String(transformed)
