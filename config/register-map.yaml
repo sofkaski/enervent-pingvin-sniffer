@@ -18,41 +18,49 @@ mappings:
     unique_id: "op1_temp_1"
     description: "Temperature at operator panel 1"
     <<: *temperature_defaults
+
   - register: "6"
     topic: "sensors/frs/temperature"
     unique_id: "frs_temp_6"
     description: "Fresh air temperature"
     <<: *temperature_defaults
+
   - register: "7"
     topic: "sensors/sply_lto/temperature"
     unique_id: "sply_lto_temp_7"
     description: "Supply air temperature after HRC"
     <<: *temperature_defaults
+
   - register: "8"
     topic: "sensors/sply/temperature"
     unique_id: "sply_temp_8"
     description: "Supply air temperature"
     <<: *temperature_defaults
+
   - register: "9"
     topic: "sensors/wst/temperature"
     unique_id: "wst_temp_9"
     description: "Waste air temperature"
     <<: *temperature_defaults
+
   - register: "10"
     topic: "sensors/ext/temperature"
     unique_id: "ext_temp_10"
     description: "Room removed air temperature"
     <<: *temperature_defaults
+
   - register: "11"
     topic: "sensors/ext_lto/temperature"
     unique_id: "ext_lto_temp_11"
     description: "Removed air temperature before HRC"
     <<: *temperature_defaults
+
   - register: "12"
     topic: "sensors/wr/temperature"
     unique_id: "wr_temp_12"
     description: "Return water temperature"
     <<: *temperature_defaults
+
   - register: "13"
     datatype: "uint16"
     length: 1
@@ -63,6 +71,7 @@ mappings:
     topic: "sensors/wr/humidity"
     unique_id: "hum_ext_13"
     description: "Exhaust air humidity"
+
   - register: "35"
     datatype: "uint16"
     length: 1
@@ -73,6 +82,7 @@ mappings:
     topic: "sensors/rh_mean/humidity"
     unique_id: "hum_rh_mean_35"
     description: "48h humidity average"
+
   - register: "29"
     datatype: "uint16"
     length: 1
@@ -82,6 +92,7 @@ mappings:
     topic: "sensors/lto/supply"
     unique_id: "lto_supply_29"
     description: "Heat recovery efficiency, supply side"
+
   - register: "30"
     datatype: "uint16"
     length: 1
@@ -91,3 +102,84 @@ mappings:
     topic: "sensors/lto/Exhaust"
     unique_id: "lto_supply_30"
     description: "Heat recovery efficiency, exhaust side"
+
+  - register: "44"
+    topic: "heating/state/max_cooling"
+    ha_component: "binary_sensor"
+    ha_bit_index: 0
+    description: "Max cooling mode"
+    datatype: "uint16"
+    length: 1
+    unique_id: "heating_max_cooling_44"
+
+  - register: "44"
+    topic: "heating/state/max_heating"
+    ha_component: "binary_sensor"
+    ha_bit_index: 1
+    description: "Max heating mode"
+    datatype: "uint16"
+    length: 1
+    unique_id: "heating_max_heating_44"
+
+  - register: "44"
+    topic: "heating/state/stopped_by_alarm"
+    ha_component: "binary_sensor"
+    ha_bit_index: 2
+    description: "Enervent stopped by alarm"
+    datatype: "uint16"
+    length: 1
+    unique_id: "heating_stopped_by_alarm_44"
+
+  - register: "44"
+    topic: "heating/state/stopped"
+    ha_component: "binary_sensor"
+    ha_bit_index: 3
+    description: "Enervent stopped"
+    datatype: "uint16"
+    length: 1
+    unique_id: "heating_stopped_44"
+
+  - register: "44"
+    topic: "heating/state/away_mode"
+    ha_component: "binary_sensor"
+    ha_bit_index: 4
+    description: "Away mode"
+    datatype: "uint16"
+    length: 1
+    unique_id: "heating_away_mode_44"
+
+  - register: "44"
+    topic: "heating/state/overpressure_mode"
+    ha_component: "binary_sensor"
+    ha_bit_index: 10
+    description: "Overpressure mode"
+    datatype: "uint16"
+    length: 1
+    unique_id: "heating_overpressure_mode_44"
+
+  - register: "44"
+    topic: "heating/state/cooker_hood_mode"
+    ha_component: "binary_sensor"
+    ha_bit_index: 11
+    description: "Cooker hood mode"
+    datatype: "uint16"
+    length: 1
+    unique_id: "heating_cooker_hood_mode_44"
+
+  - register: "44"
+    topic: "heating/state/central_vc_mode"
+    ha_component: "binary_sensor"
+    ha_bit_index: 12
+    description: "Central vacuum cleaner mode"
+    datatype: "uint16"
+    length: 1
+    unique_id: "heating_central_vc_mode_44"
+
+  - register: "44"
+    topic: "heating/state/summer_night_cooling_mode"
+    ha_component: "binary_sensor"
+    ha_bit_index: 14
+    description: "Summer night cooling mode"
+    datatype: "uint16"
+    length: 1
+    unique_id: "heating_summer_night_cooling_mode_44"
