@@ -1,3 +1,4 @@
+import { logLevel } from './config'
 import { RegisterMap } from './registerMap'
 import { MappingEntry } from './types'
 import type { MqttClient as MQTTClient } from 'mqtt'
@@ -51,6 +52,8 @@ export class MqttPublisher {
       unique_id: uniqClean,
       qos: (entry.qos ?? this.opts.defaultQos ?? 0),
       device: mqttDeviceInformation,
+      value_template: entry.ha_value_template || undefined,
+
     }
     if (entry.ha_device_class) cfg.device_class = entry.ha_device_class
     if (entry.unit) cfg.unit_of_measurement = entry.unit
@@ -64,9 +67,14 @@ export class MqttPublisher {
           cfg.options = entry.ha_options
         }
       }
-      if (entry.ha_value_template) cfg.value_template = entry.ha_value_template
     }
-
+    if (component === 'binary_sensor' && entry.ha_bit_index !== undefined) {
+      cfg.value_template = `{{ iif(((value | int) == 1), 'ON', 'OFF', 'OFF') }}`
+    } 
+    if (logLevel === 'debug') {
+      console.debug('Publishing MQTT discovery config to topic %s: %o', discTopic, cfg)
+    }
+        
     try {
       // discovery configs should be retained
       this.client.publish(discTopic, JSON.stringify(cfg), { retain: true, qos: cfg.qos }, err => {
@@ -75,6 +83,13 @@ export class MqttPublisher {
     } catch (err) {
       console.error('publish discovery exception', err)
     }
+  }
+
+  /**
+   * Extract a specific bit from a value
+   */
+  private extractBit(value: number, bitIndex: number): number {
+    return (value >> bitIndex) & 1
   }
 
   /**
@@ -116,12 +131,27 @@ export class MqttPublisher {
   }
 
   publishRegister(register: number | string, raw: Buffer): boolean {
-    const entry = this.rm.lookupByAddress(register)
-    if (!entry) {
-      // unknown register
+
+    // Get all entries for this register (to support multiple binary sensors per register)
+    const allEntries = this.rm.lookupAllByAddress(register)
+    if (allEntries.length === 0) {
       return false
     }
 
+    // Publish all entries for this register
+    let publishedAny = false
+    for (const e of allEntries) {
+      if (this.publishSingleEntry(e, raw)) {
+        publishedAny = true
+      }
+    }
+    return publishedAny
+  }
+
+  /**
+   * Publish a single mapping entry
+   */
+  private publishSingleEntry(entry: MappingEntry, raw: Buffer): boolean {
     const value = this.parseRaw(entry, raw)
     let transformed = this.rm.applyTransform(entry, value, Array.from(raw))
 
@@ -133,10 +163,19 @@ export class MqttPublisher {
       }
     }
 
+    // For binary sensors with bit index, extract the bit
+    if (entry.ha_component === 'binary_sensor' && entry.ha_bit_index !== undefined) {
+      const numValue = typeof transformed === 'number' ? transformed : parseInt(String(transformed), 10)
+      transformed = this.extractBit(numValue, entry.ha_bit_index)
+    }
+
     const topic = entry.ha_state_topic_override || entry.topicResolved || entry.topic
     const payload = typeof transformed === 'object' ? JSON.stringify(transformed) : String(transformed)
     const retain = entry.retain ?? this.opts.defaultRetain ?? false
     const qos = (entry.qos ?? this.opts.defaultQos ?? 0) as 0 | 1 | 2
+    if (logLevel === 'debug') {
+      console.debug('Publishing to topic %s: payload=%s retain=%s qos=%d', topic, payload, retain, qos)
+    }
 
     try {
       this.client.publish(topic, payload, { qos, retain }, err => {

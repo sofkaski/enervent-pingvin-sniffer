@@ -23,6 +23,7 @@ export interface MappingEntryRaw {
   ha_command_topic?: string
   ha_options?: string[] | Record<string, string | number>
   ha_value_template?: string
+  ha_bit_index?: number
   retain?: boolean
   qos?: 0 | 1 | 2
   unique_id?: string

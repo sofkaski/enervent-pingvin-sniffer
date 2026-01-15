@@ -55,6 +55,7 @@ function parseRegisterSpec(spec: string, addressingBase: 0 | 1 = 1): Array<{ reg
 
 export class RegisterMap extends EventEmitter {
   private map: Map<string, MappingEntry> = new Map()
+  private mapByRegister: Map<string, MappingEntry[]> = new Map()
   private raw: MappingEntryRaw[] = []
   private filePath?: string
   private opts: RegisterMapOptions
@@ -91,6 +92,7 @@ export class RegisterMap extends EventEmitter {
       }
 
       // expand ranges and populate map
+      const newMapByRegister = new Map<string, MappingEntry[]>()
       raws.forEach(entry => {
         const expanded = parseRegisterSpec(entry.register, this.opts.addressingBase || 1)
         expanded.forEach(({ register, offset }) => {
@@ -105,11 +107,17 @@ export class RegisterMap extends EventEmitter {
           }
           const key = canonicalKeyForRegister(register)
           newMap.set(key, me)
+          
+          // Also track all entries by register for binary sensor support
+          if (!newMapByRegister.has(key)) {
+            newMapByRegister.set(key, [])
+          }
+          newMapByRegister.get(key)!.push(me)
         })
       })
 
       this.map = newMap
-      this.raw = raws
+      this.mapByRegister = newMapByRegister
       this.emit('loaded')
 
       // optional watch
@@ -127,6 +135,14 @@ export class RegisterMap extends EventEmitter {
     return this.map.get(key) ?? null
   }
 
+  /**
+   * Get all mapping entries for a register (for binary sensors with multiple definitions)
+   */
+  lookupAllByAddress(address: number | string): MappingEntry[] {
+    const key = canonicalKeyForRegister(address)
+    return this.mapByRegister.get(key) ?? []
+  }
+
   expandRanges(entry: MappingEntryRaw): MappingEntry[] {
     const expanded = parseRegisterSpec(entry.register, this.opts.addressingBase || 1)
     return expanded.map(({ register, offset }) => ({
@@ -140,7 +156,12 @@ export class RegisterMap extends EventEmitter {
   }
 
   listAll(): MappingEntry[] {
-    return Array.from(this.map.values())
+    // Flatten all entries from mapByRegister to include all binary sensors
+    const allEntries: MappingEntry[] = []
+    this.mapByRegister.forEach(entries => {
+      allEntries.push(...entries)
+    })
+    return allEntries
   }
 
   /**
@@ -189,6 +210,7 @@ export class RegisterMap extends EventEmitter {
   async close(): Promise<void> {
     if (this.watcher && typeof this.watcher.close === 'function') this.watcher.close()
     this.map.clear()
+    this.mapByRegister.clear()
     this.raw = []
     this.emit('close')
   }
