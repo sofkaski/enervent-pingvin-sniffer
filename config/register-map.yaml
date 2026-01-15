@@ -73,3 +73,21 @@ mappings:
     topic: "sensors/rh_mean/humidity"
     unique_id: "hum_rh_mean_35"
     description: "48h humidity average"
+  - register: "29"
+    datatype: "uint16"
+    length: 1
+    scale: 1
+    unit: "%"
+    ha_component: "sensor"
+    topic: "sensors/lto/supply"
+    unique_id: "lto_supply_29"
+    description: "Heat recovery efficiency, supply side"
+  - register: "30"
+    datatype: "uint16"
+    length: 1
+    scale: 1
+    unit: "%"
+    ha_component: "sensor"
+    topic: "sensors/lto/Exhaust"
+    unique_id: "lto_supply_30"
+    description: "Heat recovery efficiency, exhaust side"
