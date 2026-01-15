@@ -1,0 +1,79 @@
+defaults: &defaults
+  retain: true
+  qos: 1
+  read_only: true
+
+temperature_defaults: &temperature_defaults
+  <<: *defaults
+  datatype: "int16"
+  length: 1
+  scale: 0.1
+  unit: "°C"
+  ha_component: "sensor"
+  ha_device_class: "temperature"
+
+mappings:
+  - register: "1"
+    topic: "sensors/temperature/op1"
+    unique_id: "temp_op1"
+    description: "Temperature sensor 1"
+    <<: *temperature_defaults
+
+  - register: "10"
+    topic: "sensors/humidity"
+    unique_id: "humidity_sensor"
+    description: "Humidity sensor"
+    datatype: "uint16"
+    length: 1
+    scale: 1
+    unit: "%"
+    ha_component: "sensor"
+    ha_device_class: "humidity"
+    <<: *defaults
+
+  - register: "44"
+    topic: "controls/fan_speed/state"
+    unique_id: "fan_speed_control"
+    ha_component: "select"
+    ha_command_topic: "controls/fan_speed/set"
+    ha_options:
+      "off": 0
+      "low": 1
+      "medium": 2
+      "high": 3
+    description: "Fan speed control"
+    datatype: "uint16"
+    length: 1
+
+  - register: "50"
+    topic: "status/pump_running"
+    unique_id: "pump_status"
+    ha_component: "binary_sensor"
+    ha_device_class: "running"
+    ha_bit_index: 0
+    description: "Pump running status"
+    datatype: "uint16"
+    length: 1
+
+  - register: "51"
+    topic: "status/heater_active"
+    unique_id: "heater_status"
+    ha_component: "binary_sensor"
+    ha_device_class: "heat"
+    ha_bit_index: 2
+    description: "Heater active status"
+    datatype: "uint16"
+    length: 1
+
+  - register: "60"
+    topic: "controls/mode/state"
+    unique_id: "operation_mode"
+    ha_component: "select"
+    ha_command_topic: "controls/mode/set"
+    ha_options:
+      "heating": 0b0001
+      "cooling": 0b0010
+      "boost": 0b0100
+    description: "Operation mode with bit patterns"
+    datatype: "uint16"
+    length: 1
