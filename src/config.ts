@@ -12,7 +12,7 @@ export const mqttUsername = process.env.MQTT_USERNAME || undefined
 export const mqttPassword = process.env.MQTT_PASSWORD || undefined
 export const mqttClientId = process.env.MQTT_CLIENT_ID || `enervent-pingvin-${Math.random().toString(16).slice(2, 8)}`
 export const mqttBaseTopic = process.env.MQTT_BASE_TOPIC || 'enervent'
-export const mqttSendDiscovery = process.env.MQTT_SEND_DISCOVERY || false
+export const mqttSendDiscovery = process.env.MQTT_SEND_DISCOVERY === '1' || false
 
 // Modbus numbering offset guesses (used when mapping files use 40001-style addressing)
 export const modbusConventionalBase = Number(process.env.MODBUS_CONVENTIONAL_BASE || 40001)

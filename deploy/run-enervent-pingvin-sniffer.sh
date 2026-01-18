@@ -19,6 +19,7 @@ set -euo pipefail
 : "${CAPTURE_TIMEOUT_MS:=60000}"
 : "${MODBUS_ADDRESS_BASE:=0}"
 : "${MODBUS_CONVENTIONAL_BASE:=0}"
+: "${MQTT_SEND_DISCOVERY:=0}"
 
 export NODE_ENV
 export REGISTER_MAP_PATH
@@ -30,6 +31,7 @@ export CAPTURE_TIMEOUT_MS
 export LOG_LEVEL
 export MODBUS_ADDRESS_BASE
 export MODBUS_CONVENTIONAL_BASE
+export MQTT_SEND_DISCOVERY
 
 
 echo "Starting enervent-pingvin-sniffer"
@@ -38,6 +40,11 @@ echo "  REGISTER_MAP_PATH: $REGISTER_MAP_PATH"
 echo "  SNIFFER_ARGS: $SNIFFER_ARGS"
 echo "  MQTT_URL: $MQTT_URL"
 echo "  CAPTURE_TIMEOUT_MS: $CAPTURE_TIMEOUT_MS"
+echo "  LOG_LEVEL: $LOG_LEVEL"
+echo "  MODBUS_ADDRESS_BASE: $MODBUS_ADDRESS_BASE"
+echo "  MODBUS_CONVENTIONAL_BASE: $MODBUS_CONVENTIONAL_BASE"
+echo "  MQTT_SEND_DISCOVERY: $MQTT_SEND_DISCOVERY"
+
 
 # Run via npm start (build + node) so behaviour matches service
 exec env NODE_ENV="$NODE_ENV" \
@@ -48,4 +55,5 @@ exec env NODE_ENV="$NODE_ENV" \
           LOG_LEVEL="$LOG_LEVEL" \
           MODBUS_ADDRESS_BASE="$MODBUS_ADDRESS_BASE" \
           MODBUS_CONVENTIONAL_BASE="$MODBUS_CONVENTIONAL_BASE" \
+          MQTT_SEND_DISCOVERY="$MQTT_SEND_DISCOVERY" \
           npm run start
