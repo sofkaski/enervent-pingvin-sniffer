@@ -6,7 +6,7 @@
     "config": {
       "views": [
         {
-          "title": "Lämmitys",
+          "title": "Tila",
           "sections": [
             {
               "type": "grid",
@@ -98,6 +98,45 @@
                         "font-size": "80%"
                       },
                       "entity": "sensor.temperature_at_operator_panel_1"
+                    },
+                    {
+                      "type": "icon",
+                      "style": {
+                        "left": "10%",
+                        "top": "10%",
+                        "border": "2px solid blue",
+                        "border-radius": "10%",
+                        "color": "blue"
+                      },
+                      "icon": "mdi:chart-line",
+                      "title": "Historia",
+                      "tap_action": {
+                        "action": "navigate",
+                        "navigation_path": "/dashboard-lammitys/historia"
+                      },
+                      "hold_action": {
+                        "action": "none"
+                      }
+                    },
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "37%",
+                        "top": "43%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "sensor.enervent_greenair_heat_recovery_efficiency_exhaust_side"
+                    },
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "37%",
+                        "top": "61%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "sensor.enervent_greenair_heat_recovery_efficiency_supply_side"
                     }
                   ],
                   "image": {
@@ -113,6 +152,11 @@
                       ]
                     }
                   }
+                },
+                {
+                  "type": "markdown",
+                  "content": "Päivitetty viimeksi {{ (states.sensor.fresh_air_temperature.last_updated | as_local).strftime('%Y-%m-%dT%H:%M:%S') }}",
+                  "text_only": true
                 }
               ],
               "column_span": 2
@@ -121,6 +165,129 @@
           "type": "sections",
           "max_columns": 4,
           "cards": []
+        },
+        {
+          "type": "sections",
+          "max_columns": 4,
+          "title": "Historia",
+          "path": "historia",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Lämpötilat",
+                  "heading_style": "title"
+                },
+                {
+                  "type": "custom:history-explorer-card",
+                  "cardName": "historycard-lammitys1",
+                  "uiLayout": {
+                    "sticky": "top"
+                  },
+                  "lineGraphHeight": 600,
+                  "timelineBarHeight": 16,
+                  "timelineBarSpacing": 25,
+                  "showCurrentValues": false,
+                  "lineMode": "stepped",
+                  "tooltip": {
+                    "showDuration": true
+                  },
+                  "graphs": [
+                    {
+                      "type": "line",
+                      "options": {
+                        "ymin": 0,
+                        "ymax": 45,
+                        "ystepSize": 1
+                      },
+                      "entities": [
+                        {
+                          "entity": "sensor.temperature_at_operator_panel_1",
+                          "name": "Eteinen",
+                          "fill": "rgba(0,0,0,0.0)"
+                        },
+                        {
+                          "entity": "sensor.supply_air_temperature",
+                          "name": "Kiertoilma",
+                          "fill": "rgba(0,0,0,0.0)"
+                        },
+                        {
+                          "entity": "sensor.fresh_air_temperature",
+                          "name": "Raitisilma",
+                          "fill": "rgba(0,0,0,0.0)"
+                        },
+                        {
+                          "entity": "sensor.room_removed_air_temperature",
+                          "name": "Poistoilma",
+                          "fill": "rgba(0,0,0,0.0)"
+                        },
+                        {
+                          "entity": "sensor.supply_air_temperature_after_hrc",
+                          "name": "Korvausilma lämmitettynä",
+                          "fill": "rgba(0,0,0,0.0)"
+                        },
+                        {
+                          "entity": "sensor.waste_air_temperature",
+                          "name": "Jäteilma",
+                          "fill": "rgba(0,0,0,0.0)"
+                        },
+                        {
+                          "entity": "sensor.return_water_temperature",
+                          "name": "Kaukolämmön paluuvesi",
+                          "fill": "rgba(0,0,0,0.0)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "Ilmankosteus",
+                  "heading_style": "title"
+                },
+                {
+                  "type": "custom:history-explorer-card",
+                  "cardName": "historycard-lammitys2",
+                  "title": "Ilmankosteus",
+                  "uiLayout": {
+                    "sticky": "top"
+                  },
+                  "lineGraphHeight": 600,
+                  "timelineBarHeight": 16,
+                  "timelineBarSpacing": 25,
+                  "showCurrentValues": false,
+                  "lineMode": "stepped",
+                  "tooltip": {
+                    "showDuration": true
+                  },
+                  "graphs": [
+                    {
+                      "type": "line",
+                      "entities": [
+                        {
+                          "entity": "sensor.exhaust_air_humidity",
+                          "name": "Poistoilma",
+                          "fill": "rgba(0,0,0,0.0)"
+                        },
+                        {
+                          "entity": "sensor.48h_humidity_average",
+                          "name": "48 tunnin keskiarvo",
+                          "fill": "rgba(0,0,0,0.0)"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }
