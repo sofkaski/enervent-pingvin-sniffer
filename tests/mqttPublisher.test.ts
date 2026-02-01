@@ -288,4 +288,66 @@ describe('MqttPublisher', () => {
       }
     }
   })
+
+  it('publishes MQTT discovery configs for sensor and select entries', async () => {
+    const fake = new FakeClient() as any
+
+    const entries = [
+      {
+        expandedRegister: '101',
+        topic: 'sensors/temp1',
+        topicResolved: 'sensors/temp1',
+        datatype: 'uint16' as const,
+        ha_component: 'sensor',
+        description: 'Room Temp',
+        unique_id: 'room temp/1',
+        qos: 1,
+        unit: '°C'
+      },
+      {
+        expandedRegister: '102',
+        topic: 'controls/fan_speed/state',
+        topicResolved: 'controls/fan_speed/state',
+        datatype: 'uint16' as const,
+        ha_component: 'select',
+        ha_options: {
+          'off': 0,
+          'low': 1
+        },
+        ha_command_topic: 'controls/fan_speed/set',
+        description: 'Fan',
+        unique_id: 'fan#2'
+      }
+    ]
+
+    const rm: any = {
+      listAll: () => entries
+    }
+
+    const pub = new MqttPublisher(fake, rm)
+    pub.publishAllDiscovery()
+
+    // Two discovery messages should have been published
+    expect(fake.published.length).toBe(2)
+
+    const first = fake.published[0]!
+    expect(first.topic).toBe('homeassistant/sensor/room_temp_1/config')
+    const cfg1 = JSON.parse(first.payload || '{}')
+    expect(cfg1.name).toBe('Room Temp')
+    expect(cfg1.state_topic).toBe('sensors/temp1')
+    expect(cfg1.unique_id).toBe('room_temp_1')
+    expect(cfg1.qos).toBe(1)
+    expect(cfg1.device && cfg1.device.identifiers).toBeDefined()
+
+    const second = fake.published[1]!
+    expect(second.topic).toBe('homeassistant/select/fan_2/config')
+    const cfg2 = JSON.parse(second.payload || '{}')
+    expect(cfg2.name).toBe('Fan')
+    expect(cfg2.state_topic).toBe('controls/fan_speed/state')
+    expect(cfg2.unique_id).toBe('fan_2')
+    // select should include options as array of labels
+    expect(Array.isArray(cfg2.options)).toBe(true)
+    expect(cfg2.options).toEqual(['off', 'low'])
+    expect(cfg2.command_topic).toBe('controls/fan_speed/set')
+  })
 })
