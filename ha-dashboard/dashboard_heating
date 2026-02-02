@@ -22,8 +22,8 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "50%",
-                        "top": "33%",
+                        "left": "54%",
+                        "top": "32%",
                         "color": "blue",
                         "font-size": "80%"
                       },
@@ -32,8 +32,8 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "50%",
-                        "top": "71%",
+                        "left": "55%",
+                        "top": "69%",
                         "color": "blue",
                         "font-size": "80%"
                       },
@@ -42,8 +42,8 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "26%",
-                        "top": "71%",
+                        "left": "33%",
+                        "top": "69%",
                         "color": "blue",
                         "font-size": "80%"
                       },
@@ -52,8 +52,8 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "26%",
-                        "top": "52%",
+                        "left": "31%",
+                        "top": "50%",
                         "color": "blue",
                         "font-size": "80%"
                       },
@@ -62,8 +62,8 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "58%",
-                        "top": "95%",
+                        "left": "62%",
+                        "top": "93%",
                         "color": "blue",
                         "font-size": "80%"
                       },
@@ -72,8 +72,8 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "26%",
-                        "top": "35%",
+                        "left": "31%",
+                        "top": "33%",
                         "color": "blue",
                         "font-size": "80%"
                       },
@@ -82,8 +82,8 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "64%",
-                        "top": "71%",
+                        "left": "67%",
+                        "top": "69%",
                         "color": "blue",
                         "font-size": "80%"
                       },
@@ -92,8 +92,8 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "83%",
-                        "top": "90%",
+                        "left": "82%",
+                        "top": "89%",
                         "color": "blue",
                         "font-size": "80%"
                       },
@@ -121,7 +121,7 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "37%",
+                        "left": "42%",
                         "top": "43%",
                         "color": "blue",
                         "font-size": "80%"
@@ -131,23 +131,96 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "37%",
-                        "top": "61%",
+                        "left": "42%",
+                        "top": "60%",
                         "color": "blue",
                         "font-size": "80%"
                       },
                       "entity": "sensor.enervent_greenair_heat_recovery_efficiency_supply_side"
+                    },
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "13%",
+                        "top": "89%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "sensor.28_13d01c070000_lampotila"
+                    },
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "13%",
+                        "top": "97%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "sensor.28_24581d070000_lampotila"
+                    },
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "87%",
+                        "top": "39%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "climate.ilp_01_gree_0f15",
+                      "attribute": "outside_temperature"
+                    },
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "90%",
+                        "top": "39%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "sensor.ilp_01_outside_temperature",
+                      "attribute": "unit_of_measurement"
+                    },
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "82%",
+                        "top": "69%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "climate.ilp_01_gree_0f15",
+                      "attribute": "current_temperature",
+                      "suffix": " °C"
                     }
                   ],
                   "image": {
-                    "media_content_id": "http://homeassistant.local:8123/local/enervent_diagram_fi.png",
-                    "media_content_type": "",
+                    "media_content_id": "media-source://image_upload/35b9c0326abb467f865b86892fae6b2a",
+                    "media_content_type": "image/png",
                     "metadata": {
+                      "title": "enervent_diagram_fi.png",
+                      "thumbnail": "/api/image/serve/35b9c0326abb467f865b86892fae6b2a/256x256",
+                      "media_class": "image",
                       "navigateIds": [
                         {},
                         {
-                          "media_content_type": "",
-                          "media_content_id": "__MANUAL_ENTRY__"
+                          "media_content_type": "app",
+                          "media_content_id": "media-source://image_upload"
+                        }
+                      ]
+                    }
+                  },
+                  "dark_mode_image": {
+                    "media_content_id": "media-source://image_upload/296b86546b6bed523c5b37cef25863e2",
+                    "media_content_type": "image/png",
+                    "metadata": {
+                      "title": "enervent_diagram_fi.png",
+                      "thumbnail": "/api/image/serve/296b86546b6bed523c5b37cef25863e2/256x256",
+                      "media_class": "image",
+                      "navigateIds": [
+                        {},
+                        {
+                          "media_content_type": "app",
+                          "media_content_id": "media-source://image_upload"
                         }
                       ]
                     }
@@ -190,7 +263,7 @@
                   "timelineBarHeight": 16,
                   "timelineBarSpacing": 25,
                   "showCurrentValues": false,
-                  "lineMode": "stepped",
+                  "lineMode": "smooth",
                   "tooltip": {
                     "showDuration": true
                   },
@@ -199,8 +272,8 @@
                       "type": "line",
                       "options": {
                         "ymin": 0,
-                        "ymax": 45,
-                        "ystepSize": 1
+                        "ymax": 50,
+                        "ystepSize": 5
                       },
                       "entities": [
                         {
@@ -235,10 +308,106 @@
                         },
                         {
                           "entity": "sensor.return_water_temperature",
-                          "name": "Kaukolämmön paluuvesi",
+                          "name": "Paluuvesi patterilta",
+                          "fill": "rgba(0,0,0,0.0)"
+                        },
+                        {
+                          "entity": "sensor.ilp_01_outside_temperature",
+                          "name": "Ulkoilma",
                           "fill": "rgba(0,0,0,0.0)"
                         }
                       ]
+                    }
+                  ]
+                },
+                {
+                  "type": "custom:apexcharts-card",
+                  "graph_span": "24h",
+                  "header": {
+                    "title": "Lämmitys",
+                    "show": false
+                  },
+                  "span": {
+                    "start": "day"
+                  },
+                  "apex_config": {
+                    "grid": {
+                      "show": true,
+                      "borderColor": "white"
+                    },
+                    "chart": {
+                      "height": "500px"
+                    }
+                  },
+                  "yaxis": [
+                    {
+                      "id": "left",
+                      "decimals": 0,
+                      "min": 20,
+                      "max": 80,
+                      "apex_config": {
+                        "title": {
+                          "text": "Lämpötila (°C)"
+                        }
+                      }
+                    }
+                  ],
+                  "series": [
+                    {
+                      "entity": "sensor.28_13d01c070000_lampotila",
+                      "name": "KL tulovesi",
+                      "type": "line",
+                      "curve": "smooth",
+                      "yaxis_id": "right",
+                      "color": "#e71d1d",
+                      "stroke_width": 2,
+                      "show": {
+                        "datalabels": false,
+                        "legend_value": false
+                      },
+                      "extend_to": "now"
+                    },
+                    {
+                      "entity": "sensor.28_24581d070000_lampotila",
+                      "name": "KL paluuvesi",
+                      "type": "line",
+                      "curve": "smooth",
+                      "yaxis_id": "right",
+                      "color": "#1d2ae7",
+                      "stroke_width": 2,
+                      "show": {
+                        "datalabels": false,
+                        "legend_value": false
+                      },
+                      "extend_to": "now"
+                    },
+                    {
+                      "entity": "sensor.return_water_temperature",
+                      "name": "Paluuvesi patterilta",
+                      "type": "line",
+                      "curve": "smooth",
+                      "yaxis_id": "left",
+                      "color": "#1d90e7",
+                      "stroke_width": 2,
+                      "show": {
+                        "datalabels": false,
+                        "legend_value": false
+                      },
+                      "extend_to": "now"
+                    },
+                    {
+                      "entity": "sensor.supply_air_temperature",
+                      "name": "Kiertoilma",
+                      "type": "line",
+                      "curve": "smooth",
+                      "yaxis_id": "left",
+                      "color": "#c0392b",
+                      "stroke_width": 2,
+                      "show": {
+                        "datalabels": false,
+                        "legend_value": false
+                      },
+                      "extend_to": "now"
                     }
                   ]
                 }
@@ -260,10 +429,8 @@
                     "sticky": "top"
                   },
                   "lineGraphHeight": 600,
-                  "timelineBarHeight": 16,
-                  "timelineBarSpacing": 25,
                   "showCurrentValues": false,
-                  "lineMode": "stepped",
+                  "lineMode": "smooth",
                   "tooltip": {
                     "showDuration": true
                   },
@@ -288,6 +455,54 @@
               ]
             }
           ]
+        },
+        {
+          "type": "sections",
+          "max_columns": 4,
+          "title": "ILP",
+          "path": "ilp",
+          "icon": "mdi:heat-pump",
+          "sections": [
+            {
+              "type": "grid",
+              "cards": [
+                {
+                  "type": "heading",
+                  "heading": "ILP-01"
+                },
+                {
+                  "type": "tile",
+                  "entity": "switch.ilp_01_air"
+                },
+                {
+                  "type": "tile",
+                  "entity": "switch.ilp_01_beeper"
+                },
+                {
+                  "type": "tile",
+                  "entity": "climate.ilp_01_gree_0f15"
+                },
+                {
+                  "type": "tile",
+                  "entity": "switch.ilp_01_health"
+                },
+                {
+                  "type": "tile",
+                  "entity": "switch.ilp_01_lights"
+                },
+                {
+                  "type": "tile",
+                  "entity": "switch.ilp_01_x_fan"
+                },
+                {
+                  "type": "tile",
+                  "entity": "sensor.ilp_01_outside_temperature"
+                }
+              ]
+            }
+          ],
+          "show_icon_and_title": true,
+          "cards": []
         }
       ]
     }
