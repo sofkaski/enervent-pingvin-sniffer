@@ -22,8 +22,8 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "50%",
-                        "top": "33%",
+                        "left": "54%",
+                        "top": "32%",
                         "color": "blue",
                         "font-size": "80%"
                       },
@@ -32,8 +32,8 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "50%",
-                        "top": "71%",
+                        "left": "55%",
+                        "top": "69%",
                         "color": "blue",
                         "font-size": "80%"
                       },
@@ -42,8 +42,8 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "26%",
-                        "top": "71%",
+                        "left": "33%",
+                        "top": "69%",
                         "color": "blue",
                         "font-size": "80%"
                       },
@@ -52,8 +52,8 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "26%",
-                        "top": "52%",
+                        "left": "31%",
+                        "top": "50%",
                         "color": "blue",
                         "font-size": "80%"
                       },
@@ -62,8 +62,8 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "58%",
-                        "top": "95%",
+                        "left": "62%",
+                        "top": "93%",
                         "color": "blue",
                         "font-size": "80%"
                       },
@@ -72,8 +72,8 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "26%",
-                        "top": "35%",
+                        "left": "31%",
+                        "top": "33%",
                         "color": "blue",
                         "font-size": "80%"
                       },
@@ -82,8 +82,8 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "64%",
-                        "top": "71%",
+                        "left": "67%",
+                        "top": "69%",
                         "color": "blue",
                         "font-size": "80%"
                       },
@@ -92,8 +92,8 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "83%",
-                        "top": "90%",
+                        "left": "82%",
+                        "top": "89%",
                         "color": "blue",
                         "font-size": "80%"
                       },
@@ -121,7 +121,7 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "37%",
+                        "left": "42%",
                         "top": "43%",
                         "color": "blue",
                         "font-size": "80%"
@@ -131,23 +131,62 @@
                     {
                       "type": "state-label",
                       "style": {
-                        "left": "37%",
-                        "top": "61%",
+                        "left": "42%",
+                        "top": "60%",
                         "color": "blue",
                         "font-size": "80%"
                       },
                       "entity": "sensor.enervent_greenair_heat_recovery_efficiency_supply_side"
+                    },
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "13%",
+                        "top": "89%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "sensor.10_e3402f000000_lampotila"
+                    },
+                    {
+                      "type": "state-label",
+                      "style": {
+                        "left": "13%",
+                        "top": "97%",
+                        "color": "blue",
+                        "font-size": "80%"
+                      },
+                      "entity": "sensor.10_754f2f000000_lampotila"
                     }
                   ],
                   "image": {
-                    "media_content_id": "http://homeassistant.local:8123/local/enervent_diagram_fi.png",
-                    "media_content_type": "",
+                    "media_content_id": "media-source://image_upload/cb00ccb5beb83b6b87e25874eb18f1d4",
+                    "media_content_type": "image/png",
                     "metadata": {
+                      "title": "enervent_diagram_fi.png",
+                      "thumbnail": "/api/image/serve/cb00ccb5beb83b6b87e25874eb18f1d4/256x256",
+                      "media_class": "image",
                       "navigateIds": [
                         {},
                         {
-                          "media_content_type": "",
-                          "media_content_id": "__MANUAL_ENTRY__"
+                          "media_content_type": "app",
+                          "media_content_id": "media-source://image_upload"
+                        }
+                      ]
+                    }
+                  },
+                  "dark_mode_image": {
+                    "media_content_id": "media-source://image_upload/4b022e7df14d5a3d1ffd93b7411746b9",
+                    "media_content_type": "image/png",
+                    "metadata": {
+                      "title": "enervent_diagram_fi.png",
+                      "thumbnail": "/api/image/serve/4b022e7df14d5a3d1ffd93b7411746b9/256x256",
+                      "media_class": "image",
+                      "navigateIds": [
+                        {},
+                        {
+                          "media_content_type": "app",
+                          "media_content_id": "media-source://image_upload"
                         }
                       ]
                     }
@@ -198,9 +237,9 @@
                     {
                       "type": "line",
                       "options": {
-                        "ymin": 0,
-                        "ymax": 45,
-                        "ystepSize": 1
+                        "ymin": 5,
+                        "ymax": 50,
+                        "ystepSize": 5
                       },
                       "entities": [
                         {
